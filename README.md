@@ -1,3 +1,46 @@
+# AWS Elastic Container Service (ECS) Cluster for Application Terraform Module
+
+## Usage
+
+Elastic Container Service (ECS) Cluster only:
+
+```tf
+module "my_app" {
+  source = "ianrodrigues/ecs-app/aws"
+
+  name    = "my-app"
+  environ = "beta"
+
+  capacity_providers = ["FARGATE", "FARGATE_SPOT"]
+
+  tags = {
+    "terraform" = "true"
+  }
+}
+```
+
+Elastic Container Service (ECS) Cluster and Application Load Balancer (ALB):
+
+```tf
+module "my_app" {
+  source = "ianrodrigues/ecs-app/aws"
+
+  name    = "my-app"
+  environ = "beta"
+
+  capacity_providers = ["FARGATE", "FARGATE_SPOT"]
+
+  create_load_balancer = true
+
+  vpc_id            = "vpc-abcde012"
+  public_subnet_ids = ["subnet-abcde012", "subnet-bcde012a"]
+
+  tags = {
+    "terraform" = "true"
+  }
+}
+```
+
 ## Requirements
 
 | Name | Version |
