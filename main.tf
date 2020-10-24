@@ -1,3 +1,10 @@
+locals {
+  tags = {
+    "app:name"        = random_string.cluster.keepers.name
+    "app:environment" = random_string.cluster.keepers.environ
+  }
+}
+
 resource "random_string" "cluster" {
   length  = 8
   lower   = false
@@ -26,13 +33,10 @@ resource "aws_ecs_cluster" "this" {
 
   setting {
     name  = "containerInsights"
-    value = "enabled"
+    value = var.enable_container_insights ? "enabled" : "disabled"
   }
 
-  tags = merge(var.tags, {
-    "app:name"        = random_string.cluster.keepers.name
-    "app:environment" = random_string.cluster.keepers.environ
-  })
+  tags = merge(var.tags, local.tags)
 
   lifecycle {
     create_before_destroy = true
@@ -55,10 +59,7 @@ module "this_alb_security_group" {
   egress_cidr_blocks = ["0.0.0.0/0"]
   egress_rules       = ["all-all"]
 
-  tags = merge(var.tags, {
-    "app:name"        = var.name
-    "app:environment" = var.environ
-  })
+  tags = merge(var.tags, local.tags)
 }
 
 module "this_app_security_group" {
@@ -82,10 +83,7 @@ module "this_app_security_group" {
   egress_cidr_blocks = ["0.0.0.0/0"]
   egress_rules       = ["all-all"]
 
-  tags = merge(var.tags, {
-    "app:name"        = var.name
-    "app:environment" = var.environ
-  })
+  tags = merge(var.tags, local.tags)
 }
 
 module "this_alb" {
@@ -113,8 +111,5 @@ module "this_alb" {
     protocol = "HTTP"
   }]
 
-  tags = merge(var.tags, {
-    "app:name"        = random_string.cluster.keepers.name
-    "app:environment" = random_string.cluster.keepers.environ
-  })
+  tags = merge(var.tags, local.tags)
 }

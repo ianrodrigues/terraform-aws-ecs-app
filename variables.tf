@@ -26,6 +26,11 @@ variable "capacity_provider_strategies" {
   default = []
 }
 
+variable "enable_container_insights" {
+  type    = bool
+  default = true
+}
+
 variable "create_load_balancer" {
   type    = bool
   default = true
