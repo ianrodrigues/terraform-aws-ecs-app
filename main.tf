@@ -12,7 +12,17 @@ resource "random_string" "cluster" {
 resource "aws_ecs_cluster" "this" {
   name = "${random_string.cluster.keepers.name}-${random_string.cluster.keepers.environ}-${random_string.cluster.id}"
 
-  capacity_providers = ["FARGATE", "FARGATE_SPOT"]
+  capacity_providers = var.capacity_providers
+
+  dynamic "default_capacity_provider_strategy" {
+    for_each = var.capacity_provider_strategies
+
+    content {
+      capacity_provider = default_capacity_provider_strategy.value["capacity_provider"]
+      weight            = default_capacity_provider_strategy.value["weight"]
+      base              = default_capacity_provider_strategy.value["base"]
+    }
+  }
 
   setting {
     name  = "containerInsights"

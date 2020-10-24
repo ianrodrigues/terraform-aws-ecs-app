@@ -11,6 +11,21 @@ variable "tags" {
   default = {}
 }
 
+variable "capacity_providers" {
+  type    = list(string)
+  default = ["FARGATE", "FARGATE_SPOT"]
+}
+
+variable "capacity_provider_strategies" {
+  type = list(object({
+    capacity_provider = string
+    weight            = number
+    base              = number
+  }))
+
+  default = []
+}
+
 variable "create_load_balancer" {
   type    = bool
   default = true
