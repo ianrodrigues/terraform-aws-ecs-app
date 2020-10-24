@@ -7,9 +7,9 @@ output "this_app_security_group_id" {
 }
 
 output "this_lb_arn" {
-  value = module.this_alb.this_lb_arn
+  value = var.create_load_balancer ? module.this_alb[0].this_lb_arn : null
 }
 
 output "this_lb_dns" {
-  value = module.this_alb.this_lb_dns_name
+  value = var.create_load_balancer ? module.this_alb[0].this_lb_dns_name : null
 }

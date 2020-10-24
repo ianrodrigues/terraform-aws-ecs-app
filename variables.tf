@@ -11,10 +11,17 @@ variable "tags" {
   default = {}
 }
 
+variable "create_load_balancer" {
+  type    = bool
+  default = true
+}
+
 variable "vpc_id" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "public_subnet_ids" {
-  type = list(string)
+  type    = list(string)
+  default = []
 }

@@ -33,6 +33,8 @@ module "this_alb_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 3.16"
 
+  count = var.create_load_balancer ? 1 : 0
+
   name        = "${var.name}-${var.environ}-alb"
   description = "Access to the public facing Load Balancer"
   vpc_id      = var.vpc_id
@@ -60,12 +62,12 @@ module "this_app_security_group" {
     rule = "all-all"
   }]
 
-  computed_ingress_with_source_security_group_id = [{
+  computed_ingress_with_source_security_group_id = var.create_load_balancer ? [{
     rule                     = "http-80-tcp"
-    source_security_group_id = module.this_alb_security_group.this_security_group_id
-  }]
+    source_security_group_id = module.this_alb_security_group[0].this_security_group_id
+  }] : []
 
-  number_of_computed_ingress_with_source_security_group_id = 1
+  number_of_computed_ingress_with_source_security_group_id = var.create_load_balancer ? 1 : 0
 
   egress_cidr_blocks = ["0.0.0.0/0"]
   egress_rules       = ["all-all"]
@@ -80,13 +82,15 @@ module "this_alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 5.9"
 
+  count = var.create_load_balancer ? 1 : 0
+
   name = "${substr(random_string.cluster.keepers.name, 0, 12)}-${substr(random_string.cluster.keepers.environ, 0, 12)}-${random_string.cluster.id}"
 
   load_balancer_type = "application"
 
   vpc_id          = var.vpc_id
   subnets         = var.public_subnet_ids
-  security_groups = [module.this_alb_security_group.this_security_group_id]
+  security_groups = [module.this_alb_security_group[0].this_security_group_id]
 
   target_groups = [{
     target_type      = "ip"
