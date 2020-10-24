@@ -3,7 +3,7 @@ variable "name" {
   description = "Name of the application. It will be used to name the resources of this module."
 
   validation {
-    condition     = can(regex("^[a-z\\-]+[a-z]$"), var.name)
+    condition     = can(regex("^[a-z\\-]+[a-z]$", var.name))
     error_message = "\"name\" can only contains lower case letter and hyphens."
   }
 }
@@ -13,7 +13,7 @@ variable "environ" {
   description = "Environment of the application. It will be used to name the resources of this module."
 
   validation {
-    condition     = can(regex("^[a-z\\-]+[a-z]$"), var.environ)
+    condition     = can(regex("^[a-z\\-]+[a-z]$", var.environ))
     error_message = "\"environ\" can only contains lower case letter and hyphens."
   }
 }
