@@ -19,9 +19,9 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| environ | n/a | `string` | `"beta"` | no |
-| name | n/a | `string` | `"my-app"` | no |
-| tags | n/a | `map(string)` | `{}` | no |
+| environ | Environment of the application. It will be used to name the resources of this module. | `string` | `"beta"` | no |
+| name | Name of the application. It will be used to name the resources of this module. | `string` | `"my-app"` | no |
+| tags | (Optional) Key-value map of resource tags. | `map(string)` | `{}` | no |
 
 ## Outputs
 

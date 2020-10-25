@@ -19,14 +19,14 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| environ | n/a | `string` | `"beta"` | no |
-| name | n/a | `string` | `"my-app"` | no |
-| public\_subnet\_ids | n/a | `list(string)` | <pre>[<br>  "subnet-002b5423",<br>  "subnet-0e0dbd33"<br>]</pre> | no |
-| tags | n/a | `map(string)` | `{}` | no |
-| vpc\_id | n/a | `string` | `"vpc-093bee94"` | no |
+| environ | Environment of the application. It will be used to name the resources of this module. | `string` | `"beta"` | no |
+| name | Name of the application. It will be used to name the resources of this module. | `string` | `"my-app"` | no |
+| public\_subnet\_ids | (Optional) A list of Public Subnet IDs. It is required if "create\_load\_balancer" is "true". | `list(string)` | <pre>[<br>  "subnet-002b5423",<br>  "subnet-0e0dbd33"<br>]</pre> | no |
+| tags | (Optional) Key-value map of resource tags. | `map(string)` | `{}` | no |
+| vpc\_id | (Optional) The VPC ID. It is required if "create\_load\_balancer" is "true". | `string` | `"vpc-093bee94"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| my\_app\_dns | n/a |
+| my\_app\_dns | DNS name of the AWS ALB (Application Load Balancer). |
