@@ -78,3 +78,13 @@ module "my_app" {
 | this\_cluster | Name of the ECS cluster. |
 | this\_lb\_arn | ARN of the AWS ALB (Application Load Balancer). |
 | this\_lb\_dns | DNS name of the AWS ALB (Application Load Balancer). |
+
+## Credits
+
+- [Ian Rodrigues](https://github.com/ianrodrigues)
+- [All Contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
+
